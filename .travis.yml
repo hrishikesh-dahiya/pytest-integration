@@ -10,6 +10,7 @@ install:
 
 script:
   - pytest tests.py --cov=.
+  - py.test code/* --cov=.
 
 after_success:
   - codecov
