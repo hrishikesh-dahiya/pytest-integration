@@ -1,16 +1,42 @@
 language: python
-
 python:
-  - 3.5
+  - "3.5"
+
+cache:
+  - pip
 
 install:
+  - pip3 install -r requirements.txt
   - pip install pytest
   - pip install pytest-cov
   - pip install codecov
 
+before_script:
+  export PYTHONPATH=$PYTHONPATH:$(pwd)
+
 script:
-  - pytest tests.py --cov=.
-  - py.test code/* --cov=.
+  - py.test -v --color=yes
 
 after_success:
   - codecov
+
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: bash etc/deploy_docs.sh
+  on:
+    branch: development
+
+notifications:
+  email:
+    recipients:
+      - achyudhk@gmail.com
+      - tsrkp@goa.bits-pilani.ac.in
+      - f20150052@goa.bits-pilani.ac.in
+    on_success: change
+    on_failure: always
+
+branches:
+  only:
+  - master
+  - development
