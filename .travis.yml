@@ -25,18 +25,5 @@ deploy:
   provider: script
   script: bash etc/deploy_docs.sh
   on:
-    branch: development
+    branch: master
 
-notifications:
-  email:
-    recipients:
-      - achyudhk@gmail.com
-      - tsrkp@goa.bits-pilani.ac.in
-      - f20150052@goa.bits-pilani.ac.in
-    on_success: change
-    on_failure: always
-
-branches:
-  only:
-  - master
-  - development
