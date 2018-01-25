@@ -13,17 +13,19 @@ install:
 
 before_script:
   export PYTHONPATH=$PYTHONPATH:$(pwd)
-
-script:
-  - py.test -v --color=yes
+  
+jobs:
+  include:
+  	- stage: test
+  	script: py.test -v --color=yes
+  	- 
+  	script: sleep
+	- stage: deploy 
+	script: bash etc/deploy_docs.sh
+	on: 
+	  branch: master
 
 after_success:
   - codecov
-
-deploy:
-  skip_cleanup: true
-  provider: script
-  script: bash etc/deploy_docs.sh
-  on:
-    branch: master
+    
 
